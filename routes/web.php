@@ -2,19 +2,12 @@
 
 declare(strict_types=1);
 
-/**
- * @var \App\Core\Application     $app
- * @var \App\Controllers\HomeController     $home
- * @var \App\Controllers\CategoryController $category
- * @var \App\Controllers\ArticleController  $article
- */
+use App\Controllers\ArticleController;
+use App\Controllers\CategoryController;
+use App\Controllers\HomeController;
 
-use App\Core\Request;
+/** @var \App\Core\Router $router */
 
-$app->router->get('/', fn(Request $r) => $home->index($r));
-
-$app->router->get('/category/{id:\d+}',           fn(Request $r, array $p) => $category->show($r, $p));
-$app->router->get('/category/{id:\d+}/{page:\d+}', fn(Request $r, array $p) => $category->show($r, $p));
-
-$app->router->get('/post/{id:\d+}',          fn(Request $r, array $p) => $article->show($r, $p));
-$app->router->get('/post/{id:\d+}/{slug}',   fn(Request $r, array $p) => $article->show($r, $p));
+$router->get('/',                   [HomeController::class,     'index']);
+$router->get('/category/{id:\d+}',  [CategoryController::class, 'show']);
+$router->get('/post/{id:\d+}',      [ArticleController::class,  'show']);

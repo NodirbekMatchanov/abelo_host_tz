@@ -4,19 +4,34 @@ declare(strict_types=1);
 
 namespace App\Core;
 
-final class Application
+class Application
 {
-    public readonly Router  $router;
-    public readonly Request $request;
+    private readonly Router  $router;
+    private readonly Request $request;
 
-    public function __construct()
+    public function __construct(private readonly array $config)
     {
-        $this->router  = new Router();
         $this->request = new Request();
+        $this->router  = new Router($config);
+
+        $this->loadRoutes();
     }
 
     public function run(): void
     {
-        $this->router->dispatch($this->request);
+        try {
+            $this->router->dispatch($this->request);
+        } catch (HttpException $e) {
+            http_response_code($e->statusCode);
+            (new View($this->config))->render('errors/' . $e->statusCode, [
+                'message' => $e->getMessage(),
+            ]);
+        }
+    }
+
+    private function loadRoutes(): void
+    {
+        $router = $this->router;
+        require dirname(__DIR__, 2) . '/routes/web.php';
     }
 }

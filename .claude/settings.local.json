@@ -2,7 +2,11 @@
   "permissions": {
     "allow": [
       "PowerShell(Get-ChildItem \"d:\\\\OpenServer\\\\domains\\\\abelo_tz\" -Recurse | Where-Object { !$_.PSIsContainer } | Select-Object -ExpandProperty FullName | ForEach-Object { $_.Replace\\(\"d:\\\\OpenServer\\\\domains\\\\abelo_tz\\\\\", \"\"\\) } | Sort-Object)",
-      "PowerShell(Get-ChildItem \"d:\\\\OpenServer\\\\domains\\\\abelo_tz\" -Recurse | Where-Object { !$_.PSIsContainer } | Select-Object -ExpandProperty FullName | ForEach-Object { $_.Replace\\(\"D:\\\\OpenServer\\\\domains\\\\abelo_tz\\\\\", \"\"\\) } | Where-Object { $_ -notmatch '^\\\\.' } | Sort-Object)"
+      "PowerShell(Get-ChildItem \"d:\\\\OpenServer\\\\domains\\\\abelo_tz\" -Recurse | Where-Object { !$_.PSIsContainer } | Select-Object -ExpandProperty FullName | ForEach-Object { $_.Replace\\(\"D:\\\\OpenServer\\\\domains\\\\abelo_tz\\\\\", \"\"\\) } | Where-Object { $_ -notmatch '^\\\\.' } | Sort-Object)",
+      "Bash(Get-ChildItem -Path \"D:\\\\OpenServer\\\\domains\\\\abelo_host_tz\" -Recurse -Force)",
+      "Bash(Select-Object FullName)",
+      "PowerShell(head -150)",
+      "Bash(grep -E '\\\\.php$|/$')"
     ]
   }
 }

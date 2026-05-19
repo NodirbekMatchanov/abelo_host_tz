@@ -5,22 +5,13 @@ declare(strict_types=1);
 namespace App\Controllers;
 
 use App\Core\Request;
-use App\Core\View;
-use App\Services\CategoryService;
-use App\Services\PostService;
 
-final class HomeController
+class HomeController extends BaseController
 {
-    public function __construct(
-        private readonly PostService     $postService,
-        private readonly CategoryService $categoryService,
-        private readonly View            $view,
-    ) {}
-
-    public function index(Request $request): void
+    public function index(Request $request, array $params): void
     {
-        $sort = $request->query('sort', 'date');
-        $page = (int) $request->query('page', 1);
+        $sort = $request->getQuery('sort', 'date');
+        $page = $request->getInt('page', 1);
 
         ['posts' => $posts, 'pagination' => $pagination] =
             $this->postService->getHomePagePosts($sort, $page);

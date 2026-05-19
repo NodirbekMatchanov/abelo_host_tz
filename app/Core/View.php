@@ -6,18 +6,16 @@ namespace App\Core;
 
 use Smarty;
 
-final class View
+class View
 {
     private Smarty $smarty;
 
-    public function __construct()
+    public function __construct(array $config)
     {
-        $cfg = require dirname(__DIR__, 2) . '/config/app.php';
-
         $this->smarty = new Smarty();
-        $this->smarty->setTemplateDir($cfg['views_dir']);
-        $this->smarty->setCompileDir($cfg['compile_dir']);
-        $this->smarty->setCacheDir($cfg['cache_dir']);
+        $this->smarty->setTemplateDir($config['smarty']['template_dir']);
+        $this->smarty->setCompileDir($config['smarty']['compile_dir']);
+        $this->smarty->setCacheDir($config['smarty']['cache_dir']);
         $this->smarty->caching = false;
     }
 

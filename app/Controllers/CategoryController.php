@@ -4,29 +4,21 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
+use App\Core\HttpException;
 use App\Core\Request;
-use App\Core\View;
-use App\Services\CategoryService;
 
-final class CategoryController
+class CategoryController extends BaseController
 {
-    public function __construct(
-        private readonly CategoryService $categoryService,
-        private readonly View            $view,
-    ) {}
-
     public function show(Request $request, array $params): void
     {
         $id   = (int) $params['id'];
-        $sort = $request->query('sort', 'date');
-        $page = (int) $request->query('page', 1);
+        $sort = $request->getQuery('sort', 'date');
+        $page = $request->getInt('page', 1);
 
         $result = $this->categoryService->getCategoryWithPosts($id, $sort, $page);
 
         if ($result === null) {
-            http_response_code(404);
-            $this->view->render('errors/404');
-            return;
+            throw new HttpException(404);
         }
 
         $this->view->render('category/index', [
