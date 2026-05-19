@@ -11,6 +11,7 @@ final class Category
         public readonly string  $name,
         public readonly ?string $description,
         public readonly string  $createdAt,
+        public readonly string  $updatedAt,
     ) {}
 
     public static function fromArray(array $row): self
@@ -20,6 +21,7 @@ final class Category
             name:        $row['name'],
             description: $row['description'] ?? null,
             createdAt:   $row['created_at'],
+            updatedAt:   $row['updated_at'],
         );
     }
 }

@@ -13,6 +13,7 @@ final class Post
         public readonly string  $content,
         public readonly int     $viewsCount,
         public readonly string  $createdAt,
+        public readonly string  $updatedAt,
         public readonly ?string $image = null,
         /** @var Category[] */
         public readonly array   $categories = [],
@@ -27,6 +28,7 @@ final class Post
             content:     $row['content'],
             viewsCount:  (int) $row['views_count'],
             createdAt:   $row['created_at'],
+            updatedAt:   $row['updated_at'],
             image:       $row['image'] ?? null,
         );
     }

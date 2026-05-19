@@ -15,7 +15,8 @@ final class Request
         $uri         = $_SERVER['REQUEST_URI'] ?? '/';
         $this->path  = parse_url($uri, PHP_URL_PATH) ?: '/';
         $this->method = strtoupper($_SERVER['REQUEST_METHOD'] ?? 'GET');
-        parse_str(parse_url($uri, PHP_URL_QUERY) ?? '', $this->query);
+        parse_str(parse_url($uri, PHP_URL_QUERY) ?? '', $parsed);
+        $this->query = $parsed;
     }
 
     public function getPath(): string

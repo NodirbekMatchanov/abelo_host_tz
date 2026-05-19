@@ -10,9 +10,9 @@ CREATE TABLE IF NOT EXISTS posts (
     image       VARCHAR(255),
     title       VARCHAR(255) NOT NULL,
     description VARCHAR(500) NOT NULL,
-    content     TEXT NOT NULL,
+    content     TEXT         NOT NULL,
     views_count INT UNSIGNED NOT NULL DEFAULT 0,
-    created_at  DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+    created_at  DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE IF NOT EXISTS post_categories (
