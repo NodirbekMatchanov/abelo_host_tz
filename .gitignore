@@ -2,3 +2,8 @@
 /storage/smarty/
 /.env
 composer.lock
+
+# IDE
+.idea/
+.vscode/
+*.iml
