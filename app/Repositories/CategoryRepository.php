@@ -18,6 +18,20 @@ final class CategoryRepository
         return array_map(Category::fromArray(...), $stmt->fetchAll());
     }
 
+    /** @return Category[] — только категории, в которых есть хотя бы одна статья */
+    public function findAllWithPosts(): array
+    {
+        $stmt = $this->pdo->query(
+            'SELECT c.*
+               FROM categories c
+              WHERE EXISTS (
+                  SELECT 1 FROM post_categories pc WHERE pc.category_id = c.id
+              )
+              ORDER BY c.name'
+        );
+        return array_map(Category::fromArray(...), $stmt->fetchAll());
+    }
+
     public function findById(int $id): ?Category
     {
         $stmt = $this->pdo->prepare(

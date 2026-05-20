@@ -28,7 +28,8 @@ final class PostService
         return ['posts' => $posts, 'pagination' => $pagination];
     }
 
-    public function getPostDetail(int $id): ?Post
+    /** @return array{post: Post, similar: Post[]}|null */
+    public function getPostDetail(int $id): ?array
     {
         $post = $this->postRepository->findById($id);
 
@@ -38,17 +39,22 @@ final class PostService
 
         $this->postRepository->incrementViews($id);
 
-        $categories = $this->categoryRepository->findByPostId($id);
+        $categories  = $this->categoryRepository->findByPostId($id);
+        $categoryIds = array_map(fn($c) => $c->id, $categories);
+        $similar     = $this->postRepository->findSimilar($id, $categoryIds, 3);
 
-        return new Post(
+        $post = new Post(
             id:          $post->id,
             title:       $post->title,
             description: $post->description,
             content:     $post->content,
             viewsCount:  $post->viewsCount + 1,
             createdAt:   $post->createdAt,
+            updatedAt:   $post->updatedAt,
             image:       $post->image,
             categories:  $categories,
         );
+
+        return ['post' => $post, 'similar' => $similar];
     }
 }

@@ -23,6 +23,17 @@ final class CategoryService
         return $this->categoryRepository->findAll();
     }
 
+    /** @return array<array{category: Category, posts: Post[]}> */
+    public function getCategoriesWithLatestPosts(): array
+    {
+        $categories = $this->categoryRepository->findAllWithPosts();
+
+        return array_map(function (Category $category): array {
+            $posts = $this->postRepository->findLatestByCategoryId($category->id, 3);
+            return ['category' => $category, 'posts' => $posts];
+        }, $categories);
+    }
+
     /** @return array{category: Category, posts: Post[], pagination: Pagination}|null */
     public function getCategoryWithPosts(int $id, string $sort = 'date', int $page = 1): ?array
     {

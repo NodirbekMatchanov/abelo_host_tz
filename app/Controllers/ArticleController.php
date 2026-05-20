@@ -11,15 +11,16 @@ class ArticleController extends BaseController
 {
     public function show(Request $request, array $params): void
     {
-        $id   = (int) $params['id'];
-        $post = $this->postService->getPostDetail($id);
+        $id     = (int) $params['id'];
+        $result = $this->postService->getPostDetail($id);
 
-        if ($post === null) {
+        if ($result === null) {
             throw new HttpException(404);
         }
 
         $this->view->render('article/show', [
-            'post'       => $post,
+            'post'       => $result['post'],
+            'similar'    => $result['similar'],
             'categories' => $this->categoryService->getAllCategories(),
         ]);
     }

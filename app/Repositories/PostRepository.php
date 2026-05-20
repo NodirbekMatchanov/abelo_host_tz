@@ -79,4 +79,52 @@ final class PostRepository
         );
         $stmt->execute([':id' => $id]);
     }
+
+    /** @return Post[] */
+    public function findLatestByCategoryId(int $categoryId, int $limit = 3): array
+    {
+        $stmt = $this->pdo->prepare(
+            'SELECT p.*
+               FROM posts p
+               JOIN post_categories pc ON pc.post_id = p.id
+              WHERE pc.category_id = :category_id
+              ORDER BY p.created_at DESC
+              LIMIT :limit'
+        );
+        $stmt->bindValue(':category_id', $categoryId, PDO::PARAM_INT);
+        $stmt->bindValue(':limit',       $limit,      PDO::PARAM_INT);
+        $stmt->execute();
+
+        return array_map(Post::fromArray(...), $stmt->fetchAll());
+    }
+
+    /**
+     * @param  int[]  $categoryIds
+     * @return Post[]
+     */
+    public function findSimilar(int $postId, array $categoryIds, int $limit = 3): array
+    {
+        if (empty($categoryIds)) {
+            return [];
+        }
+
+        $placeholders = implode(',', array_fill(0, count($categoryIds), '?'));
+
+        $stmt = $this->pdo->prepare(
+            "SELECT DISTINCT p.*
+               FROM posts p
+               JOIN post_categories pc ON pc.post_id = p.id
+              WHERE pc.category_id IN ({$placeholders})
+                AND p.id != ?
+              ORDER BY p.created_at DESC
+              LIMIT ?"
+        );
+
+        $params   = array_values($categoryIds);
+        $params[] = $postId;
+        $params[] = $limit;
+        $stmt->execute($params);
+
+        return array_map(Post::fromArray(...), $stmt->fetchAll());
+    }
 }

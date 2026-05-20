@@ -31,4 +31,23 @@
 
 </article>
 
+{if $similar}
+<section class="similar-posts">
+    <h2>Похожие статьи</h2>
+    <div class="posts-grid">
+        {foreach $similar as $post}
+            <article class="post-card">
+                {if $post->image}
+                    <img src="{$post->image|escape}" alt="{$post->title|escape}">
+                {/if}
+                <h3><a href="/post/{$post->id}">{$post->title|escape}</a></h3>
+                <p class="post-meta">{$post->createdAt|date_format:"%d.%m.%Y"} &bull; {$post->viewsCount} просмотров</p>
+                <p class="post-desc">{$post->description|escape}</p>
+                <a href="/post/{$post->id}" class="read-more">Читать далее</a>
+            </article>
+        {/foreach}
+    </div>
+</section>
+{/if}
+
 {/block}
