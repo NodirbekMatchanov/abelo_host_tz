@@ -1,0 +1,158 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body { font-family: system-ui, sans-serif; font-size: 15px; color: #222; background: #f4f5f7; }
+
+/* ── Layout ──────────────────────────────────────────────── */
+.admin-body { display: flex; min-height: 100vh; }
+.admin-body--login { display: block; background: #1a1a2e; }
+
+.admin-sidebar {
+    width: 220px;
+    flex-shrink: 0;
+    background: #1a1a2e;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem 1rem;
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+}
+
+.admin-logo {
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-decoration: none;
+    margin-bottom: 2rem;
+    display: block;
+}
+
+.admin-nav { display: flex; flex-direction: column; gap: .25rem; flex: 1; }
+.admin-nav a {
+    color: #bbb;
+    text-decoration: none;
+    padding: .55rem .75rem;
+    border-radius: 5px;
+    font-size: .95rem;
+}
+.admin-nav a:hover { background: rgba(255,255,255,.08); color: #fff; }
+
+.admin-logout {
+    color: #888;
+    text-decoration: none;
+    font-size: .85rem;
+    padding: .5rem .75rem;
+    border-radius: 5px;
+}
+.admin-logout:hover { color: #e55; }
+
+.admin-main {
+    margin-left: 220px;
+    padding: 2rem;
+    flex: 1;
+}
+
+/* ── Page header ─────────────────────────────────────────── */
+.admin-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+}
+.admin-header h2 { font-size: 1.4rem; }
+
+/* ── Alert ───────────────────────────────────────────────── */
+.admin-alert {
+    background: #fff0f0;
+    border-left: 4px solid #e55;
+    color: #c00;
+    padding: .75rem 1rem;
+    border-radius: 4px;
+    margin-bottom: 1.25rem;
+    font-size: .9rem;
+}
+.admin-alert ul { padding-left: 1.2rem; }
+
+/* ── Table ───────────────────────────────────────────────── */
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,.08);
+}
+.admin-table th, .admin-table td {
+    text-align: left;
+    padding: .75rem 1rem;
+    border-bottom: 1px solid #eee;
+    font-size: .9rem;
+}
+.admin-table th { background: #f8f8f8; font-weight: 600; color: #555; }
+.admin-table tr:last-child td { border-bottom: none; }
+.admin-table a { color: #1a1a2e; text-decoration: none; }
+.admin-table a:hover { text-decoration: underline; }
+
+.admin-empty { color: #888; margin-top: 1rem; }
+.admin-empty a { color: #1a1a2e; }
+.table-actions { display: flex; gap: .4rem; white-space: nowrap; }
+
+/* ── Buttons ─────────────────────────────────────────────── */
+.btn {
+    display: inline-block;
+    padding: .45rem 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background: #fff;
+    color: #333;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: .9rem;
+    line-height: 1.4;
+}
+.btn--primary { background: #1a1a2e; color: #fff; border-color: #1a1a2e; }
+.btn--primary:hover { background: #2a2a4e; }
+.btn--sm { padding: .3rem .7rem; font-size: .82rem; }
+.btn--block { display: block; width: 100%; text-align: center; }
+
+/* ── Form ────────────────────────────────────────────────── */
+.admin-form { max-width: 760px; }
+
+.form-group { margin-bottom: 1.25rem; }
+.form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: .4rem;
+    font-size: .9rem;
+}
+.form-group input[type="text"],
+.form-group input[type="url"],
+.form-group input[type="password"],
+.form-group textarea {
+    width: 100%;
+    padding: .55rem .8rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: .95rem;
+    font-family: inherit;
+    background: #fff;
+}
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group input[type="password"]:focus { outline: none; border-color: #1a1a2e; }
+.hint { font-weight: 400; color: #888; font-size: .82rem; }
+
+.checkbox-group { display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; margin-top: .4rem; }
+.checkbox-label { display: flex; align-items: center; gap: .4rem; font-weight: 400; cursor: pointer; font-size: .9rem; }
+
+.form-actions { display: flex; gap: .75rem; margin-top: 1.5rem; }
+
+/* ── Login ───────────────────────────────────────────────── */
+.login-box {
+    width: 360px;
+    margin: 10vh auto 0;
+    background: #fff;
+    padding: 2.5rem 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 24px rgba(0,0,0,.25);
+}
+.login-box h1 { font-size: 1.4rem; margin-bottom: 1.5rem; color: #1a1a2e; }

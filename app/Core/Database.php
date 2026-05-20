@@ -11,6 +11,15 @@ class Database
 {
     private readonly PDO $pdo;
 
+    /**
+     * Создаёт PDO-соединение с MySQL.
+     *
+     * ATTR_EMULATE_PREPARES = false — реальные prepared statements на стороне БД;
+     * без этого флага PDO лишь экранирует строки, что слабее по безопасности.
+     *
+     * @param array{host: string, port: int|string, database: string, charset: string, username: string, password: string} $config
+     * @throws \RuntimeException если соединение не установлено
+     */
     public function __construct(array $config)
     {
         $dsn = sprintf(
@@ -32,6 +41,9 @@ class Database
         }
     }
 
+    /**
+     * Возвращает PDO для передачи в репозитории.
+     */
     public function getPdo(): PDO
     {
         return $this->pdo;

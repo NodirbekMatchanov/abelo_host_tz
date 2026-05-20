@@ -19,6 +19,10 @@ class Application
 
     public function run(): void
     {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
         try {
             $this->router->dispatch($this->request);
         } catch (HttpException $e) {

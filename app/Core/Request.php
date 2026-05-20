@@ -9,6 +9,7 @@ class Request
     private string $path;
     private string $method;
     private array  $query;
+    private array  $body;
 
     public function __construct()
     {
@@ -17,6 +18,7 @@ class Request
         $this->method = strtoupper($_SERVER['REQUEST_METHOD'] ?? 'GET');
         parse_str(parse_url($uri, PHP_URL_QUERY) ?? '', $parsed);
         $this->query  = $parsed;
+        $this->body   = $_POST;
     }
 
     public function getPath(): string
@@ -37,5 +39,10 @@ class Request
     public function getInt(string $key, int $default = 0): int
     {
         return isset($this->query[$key]) ? (int) $this->query[$key] : $default;
+    }
+
+    public function getPost(string $key, mixed $default = null): mixed
+    {
+        return $this->body[$key] ?? $default;
     }
 }
